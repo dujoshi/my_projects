@@ -1,3 +1,9 @@
+# This is pretty table a good way to write your code blocks msgs 
+# https://pypi.org/project/PrettyTable/
+# I mainly used it for describing what case does and putitng the results
+# in a table format.
+
+
 from prettytable import PrettyTable
 
 #=========Here is the start of case block ==========#
@@ -44,3 +50,28 @@ for result in test_result:
 print x
 del x,
 
+
+
+
+#On running the above code Output will be something like this
+#
+#[dujoshi@DUJOSHI-M-K1YF:~/CODE/TEMP_CODE] $ python pretty.py
+#+-----------------------------------------------------+
+#|                   TC: Verify XYZ                    |
+#+-----------------------------------------------------+
+#|                                                     |
+#|                   TestCase will do :                |
+#|      1- This case will start doing  XYZ to bla bla  |
+#|           2- then will start bla bla on this        |
+#|          3- then will verify bla bla  on that       |
+#|     4- we can expect the following error after that |
+#|                        Error msg                    |
+#|                                                     |
+#+-----------------------------------------------------+
+#
+#+------------------+---------+
+#|    Case Name     |  Status |
+#+------------------+---------+
+#| ICMP_SRC_TO_DST  |  FAILED |
+#|    TCP_FLOW      |  FAILED |
+#+------------------+---------+
