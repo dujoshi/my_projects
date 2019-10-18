@@ -1,0 +1,35 @@
+
+Change ESX password using SSH
+==============================
+
+SSH to host
+vi /etc/pam.d/passwd
+Comment first (requisite) and second (sufficient) lines
+Copy sufficient line nad remove auth_ok. Leave this edited line uncommented
+Save and exit vim
+Change password using passwd command to desired simple (non-complex) password
+Again vi /etc/pam.d/passwd and make it same as before
+    
+Logs: 
+
+cat /etc/pam.d/passwd
+#%PAM-1.0
+
+# Change only through host advanced option "Security.PasswordQualityControl".
+#password   requisite    /lib/security/$ISA/pam_passwdqc.so retry=3 min=disabled,disabled,disabled,7,7
+#password   sufficient   /lib/security/$ISA/pam_unix.so use_authtok nullok shadow sha512
+password   sufficient   /lib/security/$ISA/pam_unix.so nullok shadow sha512
+password   required     /lib/security/$ISA/pam_deny.so
+
+[root@LVC2-DC1-HOST2:~]
+[root@LVC2-DC1-HOST2:~] passwd
+Changing password for root
+Enter new UNIX password:
+Retype new UNIX password:
+passwd: password updated successfully
+[root@LVC2-DC1-HOST2:~]
+
+Now  move the above back to the original.
+
+
+
