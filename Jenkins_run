@@ -1,0 +1,68 @@
+# in shell script it's best to write jenkins flows. 
+
+
+
+#!/bin/bash
+
+#variables can be accessed directly without any issue
+#whatever name is given in the string/boolean parameter in Jenknins job
+# the same name can be accessed directly by the shell script. 
+# i use to keep the main script in some /auto location and then in the build shell 
+# section i copy the main script in the workspace (which get's build each time you trigger)
+
+#In Execute Shell we can put the following to run it. 
+#PATH=/opt/python2.7/bin:$PATH
+#cp /auto/xyz/main_script ${WORKSPACE}
+#sh main_script || echo "Run Failed"	
+
+upgrade_setup () {
+
+       printf "\n\n#############UPGRADING  SETUP NOW ....  ################ \n"
+
+       printf "\n Removing /tmp/xyz folder if exist \n"
+       rm -rf /tmp/xyz
+
+       printf "\n create dir etc easy \n"
+       mkdir -p /tmp/pymeta
+       cd /home/dujoshi/myworkspace
+       sudo python -u somescirpt.py $testbed $start_image_dir > ${WORKSPACE}/install_log
+
+       cd ${WORKSPACE}
+       status=$(egrep 'FRESH_INSTALLATION_PASSED' install_log)
+       if [[ -n "$status" ]]; then
+             grep -v "Extracted" install_log > install_log1
+       else
+             printf "<br> setup is not upgraded to $start_image_dir </br> \n" 
+             grep -v "Extracted" install_log > install_log1
+             cat install_log1
+             printf "<br> SETUP NOT UPGRADED PROPERLY, CHECK THE LOGS </br>  \n" 
+             regression_continue_flag=0
+       fi
+
+       printf "\n\n-------------End : UPGRADING SETUP....   \n"
+}
+
+
+
+
+# For example let's write a upgrade setup script : 
+
+#2 : Upgrade the setup with new image
+if $need_start_image_upgrade; then
+        if [ $regression_continue_flag == 1 ]; then
+                upgrade_setup
+        fi
+fi
+
+# then next function etc. 
+
+
+
+
+
+
+#in case we want to use main_script with python
+# we can do that by accessing the variable using os.environ
+#Ex: 
+   # any string/boolean variable will be written as say testbed 
+   # self.testbed= os.environ['testbed']
