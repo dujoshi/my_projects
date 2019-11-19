@@ -1,0 +1,34 @@
+bashrc
+
+#like below can be sourced some of the aliases 
+
+source /Users/dujoshi/.setup_alias
+source /Users/dujoshi/.cli_alias
+
+
+#alias example
+alias iws='cd /Users/dujoshi/CODE/XYZ'
+alias in1Leaf1='ssh -l admin x.x.x.x' # this one when we can't provide password in clear text
+#below one can be used  if password is for common devices 
+alias in1APIC='sshpass -p "myPassword" ssh -o StrictHostKeyChecking=no "root"@"X.x.x.x" -o UserKnownHostsFile=/dev/null'
+
+#example to use below func is in shell write  : admin 1.1.1.1 (it'll login automatically)
+function admin {
+   password="ins3965!"
+   {
+    sshpass -p $password ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null admin@"$1"
+   } || {
+    sshpass -p $password ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null rescue-user@"$1"
+   }
+}
+
+
+function rootl {
+   #below we generate password using some python scripts 
+   password=$(/usr/local/bin/python /Users/dujoshi/CODE/TOOLS/getpassword.py 'admin' 'mypassword' $1)
+   password=$password | xargs # this is to strip unwanted space from password
+   echo $password
+   {
+    sshpass -p $password ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@"$1"
+   }
+}
