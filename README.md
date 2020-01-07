@@ -23,4 +23,5 @@ Before Committing we need to see the following :
                    >>>with open('test/system/someyame.yml', 'r') as st:
                              print (yaml.load(st))
 
-  
+  Some of the good style and python things from 
+  https://google.github.io/styleguide/pyguide.html
