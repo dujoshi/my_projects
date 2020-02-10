@@ -19,7 +19,8 @@ def post2(apic_ip):
      r = requests.post(post_url, data=json.dumps(payload), headers=headers,verify=False, cookies=cookie)
      print r
 
-post2('10.197.129.135')
+APIC_IP="x.x.x.x"     
+post2(APIC_IP)
 
 """
 1- In cisco Apic we have a API Inspector which if you turn on and try doing any configuration via GUI
