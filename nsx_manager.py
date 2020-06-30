@@ -1,3 +1,18 @@
+"""
+Info.
+https://my.vmware.com/group/vmware/downloads/details?downloadGroup=NSX-T-300-SDK-PYTHON&productId=982
+Download all above *.whl files and Install all above package using 
+pip install *.whl
+
+After that below sample nsx-manager can be used directly  like 
+
+nsxHndl=NSXT("x.x.x.x")
+nsxHndl.func()
+
+"""
+
+
+
 import time
 import re
 import os, sys, traceback
