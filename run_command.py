@@ -2,6 +2,22 @@
 Run a particular command on a remote machine via Paramiko at 
 a certain intervel 
 
+Another Info: 
+I've tried all the methods described here and here without success, and finally realized that you need to use channels instead of using the SSHClient directly for calling exec_command (this does not work in background):
+
+client = paramiko.SSHClient()
+client.connect(ip_address, username='root', pkey=paramiko_key, timeout=5)
+client.exec_command('python script.py > /dev/null 2>&1 &')
+You should create and use a channel, this works in background:
+
+client = paramiko.SSHClient()
+client.connect(ip_address, username='root', pkey=paramiko_key, timeout=5)
+transport = client.get_transport()
+channel = transport.open_session()
+channel.exec_command('python script.py > /dev/null 2>&1 &')
+
+
+
 """
 import paramiko, pdb
 from datetime import datetime, timedelta
