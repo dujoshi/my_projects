@@ -2,7 +2,8 @@
 Run a particular command on a remote machine via Paramiko at 
 a certain intervel 
 
-Another Info: 
+Another Info: based on : 
+https://stackoverflow.com/questions/17560498/running-process-of-remote-ssh-server-in-the-background-using-python-paramiko
 I've tried all the methods described here and here without success, and finally realized that you need to use channels instead of using the SSHClient directly for calling exec_command (this does not work in background):
 
 client = paramiko.SSHClient()
